@@ -1,0 +1,181 @@
+\documentclass[final,2p,12pt]{elsarticle}
+    \usepackage[utf8]{inputenc}
+    \usepackage{graphicx}
+    \usepackage[hidelinks]{hyperref}
+    \graphicspath{{images/}{../images/}}   
+    \usepackage{subfiles}
+    \usepackage{blindtext}
+    \usepackage{listings}
+    \usepackage{xcolor}
+    \usepackage{shortvrb}
+    \usepackage{float}
+    \usepackage{url}
+    \usepackage{booktabs}
+    \usepackage{subfig}
+    \usepackage{pgfgantt}
+    \usepackage{enumitem}
+    \usepackage[spanish]{babel}
+    \selectlanguage{spanish}
+
+    \definecolor{javared}{rgb}{0.6,0,0} % for strings
+    \definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+    \definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+    \definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+    \definecolor{lightgray}{rgb}{.9,.9,.9}
+    \definecolor{darkgray}{rgb}{.4,.4,.4}
+    \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+    
+
+    \setlength{\footskip}{40pt}
+
+    \lstset{language=Java,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{javapurple}\bfseries,
+    stringstyle=\color{javared},
+    commentstyle=\color{javagreen},
+    morecomment=[s][\color{javadocblue}]{/**}{*/},
+    numbers=left,
+    numberstyle=\tiny\color{black},
+    stepnumber=2,
+    numbersep=10pt,
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false}
+
+    \lstdefinelanguage{docker}{
+        keywords={FROM, RUN, COPY, ENTRYPOINT, CMD,  ENV, WORKDIR, EXPOSE, LABEL, USER, VOLUME, STOPSIGNAL, ONBUILD, MAINTAINER},
+        keywordstyle=\color{blue}\bfseries,
+        identifierstyle=\color{black},
+        sensitive=false,
+        comment=[l]{\#},
+        commentstyle=\color{purple}\ttfamily,
+        stringstyle=\color{red}\ttfamily,
+        morestring=[b]',
+        morestring=[b]"
+    }
+
+    \lstdefinelanguage{docker-compose}{
+        keywords={version, services, meh},
+        keywordstyle=\color{blue}\bfseries,
+        keywords=[2]{image, environment, volumes, ports, container_name, ports, links, build, restart, depends_on},
+        keywordstyle=[2]\color{olive}\bfseries,
+        identifierstyle=\color{black},
+        sensitive=false,
+        comment=[l]{\#},
+        commentstyle=\color{purple}\ttfamily,
+        stringstyle=\color{red}\ttfamily,
+        morestring=[b]',
+        morestring=[b]",
+    }
+
+    
+    \lstdefinelanguage{JavaScript}{
+        keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+        keywordstyle=\color{blue}\bfseries,
+        ndkeywords={class, export, boolean, throw, implements, import, this},
+        ndkeywordstyle=\color{darkgray}\bfseries,
+        identifierstyle=\color{black},
+        sensitive=false,
+        comment=[l]{//},
+        morecomment=[s]{/*}{*/},
+        commentstyle=\color{purple}\ttfamily,
+        stringstyle=\color{red}\ttfamily,
+        morestring=[b]',
+        morestring=[b]"
+    }
+    
+
+    \lstset{%
+        language=[LaTeX]TeX,
+        backgroundcolor=\color{gray!25},
+        basicstyle=\ttfamily,
+        breaklines=true,
+        columns=fullflexible
+    }
+
+    \makeatletter
+    \def\ps@pprintTitle{%
+       \let\@oddhead\@empty
+       \let\@evenhead\@empty
+       \def\@oddfoot{\reset@font\hfil\thepage\hfil}
+       \let\@evenfoot\@oddfoot
+    }
+    \makeatother
+
+\begin{document}
+\begin{frontmatter}
+
+
+\title{\textbf{Whaya}\\Una aproximación a la arquitectura de microservicios y datos espaciales}
+\author[ual]{Manel Mena\corref{cor1}\fnref{fn1}}
+\ead{manel.mena@ual.es}
+\author[ual]{Antonio Corral\corref{cor2}\fnref{fn1}}
+\ead{acorral@ual.es}
+\author[ual]{Luis Iribarne\corref{cor2}\fnref{fn1}}
+\ead{luis.iribarne@ual.es}
+
+\address[ual]{Universidad de Almería, Ctra. Sacramento, s/n, 04120 La Cañada, Almería}
+\cortext[cor1]{Autor de trabajo de fin de máster}
+\cortext[cor2]{Director/Co-Director de trabajo de fin de máster}
+\fntext[fn1]{ACG - Applied Computing Group de la Universidad de Almería, TIC-211}
+\date{\today}
+\begin{abstract}
+En esta memoria vamos a reflejar con detalle el proceso de consecución de la aplicación Whaya (\textbf{WH}ere \textbf{A}re \textbf{YA}?), una aplicación híbrida``Mobile First" que permite la comunicación entre personas contando con el geoposicionamiento de sus usuarios como principal factor diferenciador.
+Para ello, aplicaremos técnicas de desarrollo basado en microservicios, junto con metodologías apropiadas para gestión y creación de los mismos.
+Haremos todo el despliegue apoyándonos en una infraestructura back-end basada en \textit{Dockers} (Infrastructure as Code) y un \textit{front-end} realizado mediante tecnologías
+híbridas, más concretamente utilizando el framework Ionic. 
+\end{abstract}
+\begin{keyword}
+Datos espaciales\sep Datos en tiempo real\sep Arquitectura de microservicios\sep Persistencia políglota\sep Patrones de sistemas\sep IaC\sep Programación móvil\sep Programación híbrida\sep Ionic\sep Docker\sep Netflix OSS\sep Spring.
+\end{keyword}
+
+\end{frontmatter}
+\newpage
+\section*{Agradecimientos}
+\noindent
+Lo primero me gustaría realizar una serie de agradecimientos:
+\begin{itemize}
+    \item A los directores de este trabajo Antonio Corral y Luis Iribarne, sin los que la consecución de este proyecto no hubiese sido posible.
+    \item Al Departamento de Informática, en especial a Manolo Torres y José Antonio Martínez, por ofrecerme recursos la la nube privada del Departamento de Informática, junto con la gran tarea que conlleva el mantenimiento de la misma.
+    \item A mis compañeros de grupo de computación aplicada, que me aguantan cada día de manera incansable.
+    \item A mi familia sin los cuales no podría ni si quiera estar aquí.  
+\end{itemize} 
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\lstlistoflistings
+\newpage
+\section{Introducción}
+\subfile{sections/introduccion/introduccion}
+\newpage
+\section{Whaya - Desarrollo de Back-End}
+En la siguiente sección, vamos a hablar de todo lo relacionado con el \textit{back-end} de Whaya, incluyendo el tipo de arquitectura, patrones utilizados, tecnologías aplicadas, etc. Junto con ello, haremos mención tanto de la implementación, como de la seguridad que interviene
+en el funcionamiento de nuestro sistema.
+\subfile{sections/microservicios/microservicios}
+\newpage
+\section{Whaya - Desarrollo de Front-End}
+A continuación, vamos a realizar una breve introducción a las tecnologías híbridas para el desarrollo de aplicaciones móviles, en la cual detallaremos las ventajas e inconvenientes de cada una de ellas. Después, nos centramos en Ionic, la tecnología elegida para el desarrollo de Whaya. Describiremos una introducción a la misma, así como sus particularidades. Por último, nos centraremos en el desarrollo de nuestra aplicación en sí. 
+\subfile{sections/ionic/ionic}
+\newpage
+\section{Conclusiones y trabajo futuro}
+\noindent
+A lo largo de la consecución de este trabajo de fin de master, consideramos que los objetivos propuestos han sido debidamente cumplidos.
+Especialmente interesante ha sido establecer una versión un tanto particular de arquitecturas de microservicios, temática particularmente
+interesante a día de hoy. He aprendido el uso de nuevas técnicas y tecnologías punteras de los campos propuestos, dando cabida a temáticas
+muy variadas relacionadas con orquestación de microservicios, persistencia políglota, infraestructura como código, desarrollo híbrido de aplicaciones, etc.
+Otra buena experiencia didáctica ha sido encontrarnos con dificultades y poder resolverlas, dada la presencia de datos en tiempo real, particularmente como responder a cambios en los mismos.
+
+Como trabajo futuro sería interesante dotar de mayor funcionalidad a la aplicación móvil, incluir datos medioambientales, estado meteorológico o temas relacionados con
+auto check-in en las reuniones a las que vamos mediante coordenadas. Un reto que se ha quedado en el tintero ha sido replicación del
+servicio de datos en tiempo real, una solución factible sería que cuando los usuarios se conecten a este servicio, se realizase una llamada a una base de datos en la que se guarden
+tanto el id del usuario que se ha conectado, cómo en que servidor réplica está, y cuando se mande algún mensaje entre usuarios, el usuario1 compruebe primero en que servidor réplica está el usuario2, que id tiene
+en ese otro servidor, para poder de esa manera pasar el mensaje del servidor del usuario1 al servidor del usuario2. También sería interesante ver si pudiéramos hacer funcionar nuestro servicio de datos en tiempo real
+con la capa de orquestación buscando alternativas a \textit{Zuul}, como puede ser por ejemplo \textit{Consul}.
+\newpage
+\section{Bibliografía}
+\bibliography{tfm}
+\bibliographystyle{unsrt}
+
+\end{document}

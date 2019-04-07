@@ -1,0 +1,125 @@
+version: '3'
+services:
+  neo4j:
+    container_name: neo4j
+    build: neo4j
+    restart: always
+    ports:
+     - 7474:7474
+     - 7687:7687
+     - 7473:7473
+    environment:
+     - NEO4J_AUTH=neo4j/secreto # configure a custom username/password
+     - NEO4J_dbms_memory_heap_maxSize=2048M # configure the heap memory
+     - NEO4J_dbms_memory_pagecache_size=2048M # configure the cache memory
+    volumes:
+     - ./neo4j/data:/data # provision the volumes
+
+  mongo:
+    container_name: mongodb # Linea de conexion: docker exec -it mongodb mongo -u mongodb -p secreto --authenticationDatabase whaya mongodb
+    image: bitnami/mongodb:latest
+    restart: always
+    ports:
+     - 27017:27017
+    environment:
+     - MONGODB_USERNAME=mongodb
+     - MONGODB_PASSWORD=secreto
+     - MONGODB_DATABASE=whaya
+    volumes:
+     - ./mongodb/data:/bitnami
+  
+  mysql:
+    container_name: mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secreto
+      MYSQL_DATABASE: auth
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: secreto
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 --explicit_defaults_for_timestamp
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 15672:15672 
+      - 5672:5672
+
+  zuul:
+    container_name: zuul
+    build: zuul
+    restart: always
+    ports:
+      - 8080:8080
+      - 8081:8080
+    depends_on:
+      - rabbitmq
+      - eureka
+
+
+  eureka:
+    container_name: eureka
+    build: eureka
+    restart: always
+    ports:
+      - 80:8761
+    depends_on:
+      - rabbitmq
+
+  # hystrix: 
+  #   container_name: hystrix
+  #   build: hystrix
+  #   restart: always
+  #   depends_on:
+  #     - rabbitmq
+  #     - eureka
+  
+  authservice:
+    container_name: authservice
+    build: authservice
+    restart: always
+    depends_on:
+      - mysql
+      - zuul
+      - eureka
+      - rabbitmq
+
+  mongoservice:
+    container_name: mongoservice
+    build: mongoservice
+    restart: always
+    depends_on:
+      - mongo
+      - zuul
+      - rabbitmq
+      - eureka
+  
+  neoservice:
+    container_name: neoservice
+    build: neoservice
+    restart: always
+    depends_on:
+      - neo4j
+      - zuul
+      - eureka
+      - rabbitmq
+      - authservice
+
+  ws:
+    container_name: ws
+    build: ws
+    restart: always
+    ports:
+      - 9000:9000
+    depends_on:
+      - authservice
+      - mongoservice
+      - neoservice
+  

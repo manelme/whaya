@@ -1,0 +1,16 @@
+page-meetings {
+    ion-fab-list{
+        $fab-content-margin: 5px;
+    }
+    ion-fab-list > .fab{
+        width: 70vw;
+        background: rgba(0, 0, 0, 0);
+        box-shadow: 0px 0px;
+        border-radius: 0;
+        border-style: hidden;
+    }
+    ion-range {
+        width : 100%;
+        padding-right: 0;
+    }
+}

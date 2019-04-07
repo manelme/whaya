@@ -1,0 +1,5 @@
+FROM java:8
+VOLUME /tmp
+ADD whayaAPINeo-0.0.1.jar whayaAPINeo-0.0.1.jar
+RUN bash -c 'touch /whayaAPINeo-0.0.1.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/whayaAPINeo-0.0.1.jar"]

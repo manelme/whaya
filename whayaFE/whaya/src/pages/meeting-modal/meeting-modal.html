@@ -1,0 +1,46 @@
+<!--
+  Generated template for the MeetingModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+
+  <ion-navbar>
+    <ion-title>Create a Meeting</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">Close</button>
+    </ion-buttons>
+  </ion-navbar>
+  
+
+</ion-header> -->
+
+
+
+
+
+    <img [src]="image"/>
+    <ion-fab right top padding (click)="saveMeeting()">
+      <button ion-fab mini>
+        <ion-icon name="checkmark" ></ion-icon>
+      </button>
+    </ion-fab>
+    <ion-list>
+        <ion-item text-wrap>
+            <ion-label color="primary" stacked>Name</ion-label>
+            <ion-input placeholder="Text Input" [(ngModel)]="name"></ion-input>
+          </ion-item>
+    <ion-item text-wrap>
+      <ion-icon name="pin" item-start small></ion-icon>
+      <h2>Address</h2>
+      <p>{{address}}</p>
+    </ion-item>
+  
+    <ion-item>
+      <ion-icon name="calendar" item-left large ></ion-icon>
+      <ion-datetime displayFormat="DD MMM, h:mm A" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+

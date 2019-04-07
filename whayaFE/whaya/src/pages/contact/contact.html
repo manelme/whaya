@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Friends
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="sendFrienship()">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div padding>
+        <ion-segment color="primary" [(ngModel)]="contacts">
+          <ion-segment-button value="accepted">
+            Accepted
+          </ion-segment-button>
+          <ion-segment-button value="nonAcceptedByMe">
+            Requested
+          </ion-segment-button>
+          <ion-segment-button value="nonAccepted">
+            Pending
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+  <div [ngSwitch]="contacts">
+  <ion-list *ngSwitchCase="'accepted'">
+    <ion-item-sliding>
+      <ion-item *ngFor="let toUser of connectedFriends; let i = index" (click)="chat(toUser)">
+        <ion-avatar item-start>
+          <img [src]="toUser.avatar">
+        </ion-avatar>
+        <h2>{{toUser.name}}</h2>
+        <p>{{toUser.email}}</p>
+        <ion-note item-end *ngIf="toUser.unread">
+          <ion-icon name="chatboxes"></ion-icon>
+        </ion-note>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="chat(toUser)">
+          <ion-icon name="text"></ion-icon>
+          Text
+        </button>
+        <button ion-button color="danger" (click)="delete(toUser)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngSwitchCase="'nonAcceptedByMe'">
+      <ion-item-sliding *ngFor="let toUser of friends.NonAceptedByMe; let i = index">
+        <ion-item>
+          <ion-avatar item-start>
+            <img [src]="toUser.avatar">
+          </ion-avatar>
+          <h2>{{toUser.name}}</h2>
+          <p>{{toUser.email}}</p>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="accept(toUser)">
+            <ion-icon name="checkmark"></ion-icon>
+            Accept
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngSwitchCase="'nonAccepted'">
+      <ion-item-sliding>
+        <ion-item *ngFor="let toUser of friends.NonAccepted; let i = index">
+          <ion-avatar item-start>
+            <img [src]="toUser.avatar">
+          </ion-avatar>
+          <h2>{{toUser.name}}</h2>
+          <p>{{toUser.email}}</p>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger">
+            <ion-icon name="trash"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+</div>
+</ion-content>
