@@ -17,7 +17,7 @@ declare var google;
 export class GeolocProvider {
   
   currentPos : Geoposition;
-  apiKey = 'AIzaSyBStU_iZL7JFBM8FU4xOT9P2SqTvRPqt8k';
+  apiKey = 'maps_API_KEY';
 
   constructor(public http: Http, public geolocation: Geolocation) {
     console.log('Hello GeolocProvider Provider');
